@@ -1,8 +1,11 @@
 ﻿using System.Net;
 using System.Text;
 using it_planet.configs;
+using it_planet.handler;
 using it_planet.repository;
 using it_planet.repository.postgres;
+using it_planet.server;
+using it_planet.service;
 using Newtonsoft.Json;
 using Npgsql;
 
@@ -17,9 +20,13 @@ var database = new PostgresDatabase(config);
 
 // создание слоя handler, service, repository
 var repository = new Repository(database);
+var service = new Service(repository);
+var handler = new Handler(service);
 
-var account = repository.Account.Get("execaus@gmail.com", "1234");
-Console.WriteLine(account.Email);
+var router = new Router(handler);
+var server = new Server(config, router);
+
+server.Run();
 
 // запустить сервер (слушателя на порт)
 
