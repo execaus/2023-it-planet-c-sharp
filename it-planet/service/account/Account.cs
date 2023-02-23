@@ -10,7 +10,26 @@ public class Account : ServiceResponsibility, IAccount
     
     public PostgresAccount Registration(RegistrationInput props)
     {
-        // TODO валидация
+        if (props.firstName == null || props.firstName.Trim() == "")
+        {
+            ThrowInvalidRequestField("invalid first name: {0}", props.firstName);
+        }
+        
+        if (props.lastName == null || props.lastName.Trim() == "")
+        {
+            ThrowInvalidRequestField("invalid last name: {0}", props.lastName);
+        }
+        
+        if (props.email == null || props.email.Trim() == "")
+        {
+            ThrowInvalidRequestField("invalid email: {0}", props.email);
+        }
+        
+        if (props.password == null || props.password.Trim() == "")
+        {
+            ThrowInvalidRequestField("invalid password: {0}", props.password);
+        }
+        
         return _repository.Account.Create(
             props.firstName,
             props.lastName,

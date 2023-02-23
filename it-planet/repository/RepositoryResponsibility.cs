@@ -1,3 +1,4 @@
+using System.Data;
 using System.Reflection;
 using it_planet.repository.postgres;
 using it_planet.repository.postgres.queries;
@@ -26,7 +27,7 @@ public class RepositoryResponsibility
             command.Parameters.Add(new NpgsqlParameter {Value = arg});
         }
         
-        var queryReader = command.ExecuteReader();
+        using var queryReader = command.ExecuteReader();
         var isMoveCursorSuccess = queryReader.Read();
         if (!isMoveCursorSuccess) throw new NpgsqlRowNotFoundException();
 
