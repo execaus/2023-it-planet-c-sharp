@@ -21,7 +21,6 @@ public class RequestContext
 
     public TBody GetBody<TBody>()
     {
-        Console.WriteLine("asdasdsadsad");
         string stringBody;
         using (var reader = new StreamReader(_request.InputStream, _request.ContentEncoding))
         {
@@ -47,7 +46,7 @@ public class RequestContext
         return _request.HttpMethod;
     }
 
-    public void SendCreated(RegistrationOutput output)
+    public void SendCreated(object output)
     {
         SendRequest(output, HttpStatusCode.Created);
     }
